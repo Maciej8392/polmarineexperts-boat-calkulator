@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolmarineExperts Boat Import Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        input { margin: 5px; padding: 8px; }
+        button { padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>PolmarineExperts Boat Import Calculator</h2>
+    <p>Enter the details below to estimate your import costs:</p>
+    <label>Boat Purchase Price (USD): <input type="number" id="price" value="30000"></label><br>
+    <label>Invoice Value for Customs (USD): <input type="number" id="invoice" value="20000"></label><br>
+    <label>Transport in USA (USD): <input type="number" id="transportUSA" value="1500"></label><br>
+    <label>Freight Cost (USD): <input type="number" id="freight" value="8000"></label><br>
+    <label>Trailer Cost (USD): <input type="number" id="trailer" value="3500"></label><br>
+    <label>VAT Rate (% - Netherlands 21%): <input type="number" id="vat" value="21"></label><br>
+    <label>Import Duty (% - Boats to Netherlands 1.5%): <input type="number" id="duty" value="1.5"></label><br>
+    <label>Transport from Netherlands to Poland (USD): <input type="number" id="transportPL" value="2500"></label><br>
+    <button onclick="calculateCost()">Calculate</button>
+    <h3>Total Cost: <span id="total"></span> PLN</h3>
+
+    <script>
+        function calculateCost() {
+            let price = parseFloat(document.getElementById('price').value);
+            let invoice = parseFloat(document.getElementById('invoice').value);
+            let transportUSA = parseFloat(document.getElementById('transportUSA').value);
+            let freight = parseFloat(document.getElementById('freight').value);
+            let trailer = parseFloat(document.getElementById('trailer').value);
+            let vat = parseFloat(document.getElementById('vat').value) / 100;
+            let duty = parseFloat(document.getElementById('duty').value) / 100;
+            let transportPL = parseFloat(document.getElementById('transportPL').value);
+            let exchangeRate = 4.06;
+            
+            let dutyCost = invoice * duty;
+            let vatCost = (invoice + dutyCost + freight) * vat;
+            let totalUSD = price + transportUSA + freight + trailer + dutyCost + vatCost + transportPL;
+            let totalPLN = totalUSD * exchangeRate;
+            
+            document.getElementById('total').innerText = totalPLN.toFixed(2) + ' PLN';
+        }
+    </script>
+</body>
+</html>
